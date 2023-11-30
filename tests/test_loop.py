@@ -7,6 +7,7 @@ import pytest
 
 from aiohttp import web
 from aiohttp.test_utils import AioHTTPTestCase, loop_context
+
 # from tests._pytest_plugin import SUPPORTS_XDIST  # type: ignore[import]
 
 
@@ -14,7 +15,9 @@ from aiohttp.test_utils import AioHTTPTestCase, loop_context
     platform.system() == "Windows", reason="the test is not valid for Windows"
 )
 async def test_subprocess_co(loop: Any) -> None:
-    assert PY_38 or threading.current_thread() is threading.main_thread()  # or SUPPORTS_XDIST
+    assert (
+        PY_38 or threading.current_thread() is threading.main_thread()
+    )  # or SUPPORTS_XDIST
     proc = await asyncio.create_subprocess_shell(
         "exit 0",
         stdin=asyncio.subprocess.DEVNULL,
